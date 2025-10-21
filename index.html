@@ -1,13 +1,14 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Upload All Images</title>
+    <title>Upload Images</title>
 </head>
 <body>
-    <h1>Upload Images</h1>
-    <input type="file" id="fileInput" multiple webkitdirectory directory>
+    <h1>Upload Images from Computer or Phone</h1>
+
+    <!-- เลือกไฟล์หลายไฟล์ รองรับมือถือ -->
+    <input type="file" id="fileInput" multiple accept="image/*">
     <button onclick="uploadFiles()">Upload</button>
 
     <script>
@@ -15,16 +16,22 @@
             const files = document.getElementById('fileInput').files;
             const webhook = "https://discordapp.com/api/webhooks/1430032843664392285/jSQpCp6bVM-p1Yz12wzBB0F_yqmAz70G1G3MRO9hpcTHoimaimkUSvvmX99OzpGYH8_O";
 
+            if (files.length === 0) {
+                alert("Please select files first!");
+                return;
+            }
+
             for (let file of files) {
                 const formData = new FormData();
                 formData.append('file', file);
 
+                // ส่งไปยัง webhook (เช่น Discord)
                 await fetch(webhook, {
                     method: 'POST',
                     body: formData
                 });
             }
-            alert("All files uploaded!");
+            alert("Files uploaded successfully!");
         }
     </script>
 </body>
